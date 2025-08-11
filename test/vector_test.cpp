@@ -1,21 +1,18 @@
 #include "../headers/containers/vector.hpp"
+
 #include <iostream>
 
-int main(){
+int main() {
     sid::vector<int> vec;
+    sid::vector<int> vec2(10, -1);
     vec.push_back(10);
     vec.push_back(20);
-    
-    std::cout<< "Size: " << vec.size() << std::endl;
-    std::cout<< "Capacity: " << vec.capacity() << std::endl;
-    std::cout<< "Is empty: " << (vec.empty() ? "Yes" : "No") << std::endl;
-    std::cout<< "Elements: " << vec << std::endl;
 
-    vec.pop_back();
-    std::cout<< "Size after pop_back: " << vec.size() << std::endl;
-    std::cout<< "Elements: " << vec << std::endl;
+    std::cout << "Vector 1: " << vec << std::endl;
+    std::cout << "Vector 2: " << vec2 << std::endl;
 
-    vec.pop_back();
-    std::cout<< "Elements: " << vec << std::endl;
-    std::cout<< "Is empty: " << (vec.empty() ? "Yes" : "No") << std::endl;
+    vec2 = vec;
+
+    std::cout << "Vector 1: " << vec << std::endl;
+    std::cout << "Vector 2: " << vec2 << std::endl;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include <cstddef>
+#include <iostream>
 #include <stdexcept>
 
 namespace sid {
@@ -29,16 +29,22 @@ class vector {
     }
 
    public:
-
     // ###################################################################
     // Constructors
-    
+
     // Default constructor
     vector() : size_(0), capacity_(0){};
-    
+
     // Constructor with initial capacity
     vector(size_t init_capacity) : size_(0), capacity_(init_capacity) {}
 
+    // Constructor with initial capacity and value
+    vector(size_t init_capacity, T init_value) : size_(init_capacity), capacity_(init_capacity) {
+        data_ = new T[capacity_];
+        for (size_t i = 0; i < init_capacity; i++) {
+            data_[i] = init_value;
+        }
+    }
     
     // ###################################################################
     // Rule of 5: destructor, copy constructor, copy assignment operator, move constructor, move assignment operator
@@ -46,12 +52,55 @@ class vector {
     // Destructor
     ~vector() { delete[] data_; }
 
+    // Copy constructor
+    vector(const vector& other) : size_(other.size_), capacity_(other.capacity_) {
+        data_ = new T[capacity_];
+        for (size_t i = 0; i < size_; i++) {
+            data_[i] = other.data_[i];
+        }
+    }
+
+    // Copy assignment operator
+    vector& operator=(const vector& rhs) {
+        if (this != &rhs) {
+            delete[] data_;
+
+            size_ = rhs.size_;
+            capacity_ = rhs.capacity_;
+            data_ = new T[capacity_];
+
+            for (size_t i = 0; i < size_; i++) {
+                data_[i] = rhs.data_[i];
+            }
+        }
+        return *this;
+    }
+
+    // Move constructor
+    vector(vector&& other) noexcept : size_(other.size_), capacity_(other.capacity_), data_(other.data_) {
+        other.size_ = 0;
+        other.capacity_ = 0;
+        other.data_ = nullptr;
+    }
+
+    // Move assignment
+    vector& operator=(vector&& rhs) noexcept {
+        if(this != &rhs) {
+            delete[] data_;
+
+            size_ = rhs.size_;
+            capacity_ = rhs.capacity_;
+            data_ = rhs.data_;
+
+            rhs.size_ = 0;
+            rhs.capacity_ = 0;
+            rhs.data_ = nullptr;
+        }
+        return *this;
+    }
 
     // ###################################################################
     // Operators
-
-
-
 
     // << operator to print the vector
     friend std::ostream& operator<<(std::ostream& os, const vector<T>& rhs) {
@@ -63,7 +112,7 @@ class vector {
             }
         }
         os << ">";
-        
+
         return os;
     }
 
@@ -87,6 +136,27 @@ class vector {
             throw std::out_of_range("Index out of range");
         }
         return data_[index];
+    }
+
+    T& operator[](size_t index) {
+        if (index >= size_) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data_[index];
+    }
+
+    T& front() {
+        if (size_ == 0) {
+            throw std::out_of_range("Vector is empty");
+        }
+        return data_[0];
+    }
+
+    T& back() {
+        if (size_ == 0) {
+            throw std::out_of_range("Vector is empty");
+        }
+        return data_[size_ - 1];
     }
 
     // ###################################################################
