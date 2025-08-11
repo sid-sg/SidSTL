@@ -24,4 +24,18 @@ int main() {
     vec3.reserve(20);
     std::cout << "Size of Vector 3: " << vec3.size() << std::endl;
     std::cout << "Capacity of Vector 3: " << vec3.capacity() << std::endl;
+
+    vec3.clear();
+    std::cout << "Size of Vector 3: " << vec3.size() << std::endl;
+    std::cout << "Capacity of Vector 3: " << vec3.capacity() << std::endl;
+
+    vec3.resize(10, 3);
+    std::cout << "Vector 3: " << vec3 << std::endl;
+    std::cout << "Size of Vector 3 after resize: " << vec3.size()<< std::endl;
+    std::cout << "Capacity of Vector 3 after resize: " << vec3.capacity() << std::endl;
+
+    vec3.resize(5);
+    std::cout << "Vector 3: " << vec3 << std::endl;
+    std::cout << "Size of Vector 3 after resize: " << vec3.size()<< std::endl;
+    std::cout << "Capacity of Vector 3 after resize: " << vec3.capacity() << std::endl;
 }

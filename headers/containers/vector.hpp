@@ -154,8 +154,51 @@ class vector {
     // empty method to check if the vector is empty
     bool empty() const { return size_ == 0; }
 
+    // reserve method to change the capacity
     void reserve(size_t new_capacity) {
         growCapacity(new_capacity);
+    }
+
+    void resize(size_t new_size){
+       if(new_size < size_) {
+            size_ = new_size;
+       }
+       else if(new_size > size_) {
+            if(new_size > capacity_){
+                growCapacity(new_size);               
+            }
+
+            for(size_t i = size_; i < new_size; ++i) {
+                data_[i] = T();
+            }
+
+            size_ = new_size;
+       }            
+    }
+
+    void resize(size_t new_size, const T& value) {
+       if(new_size < size_) {
+            size_ = new_size;
+       }
+       else if(new_size > size_) {
+            if(new_size > capacity_){
+                growCapacity(new_size);               
+            }
+
+            for(size_t i = size_; i < new_size; ++i) {
+                data_[i] = value;
+            }
+
+            size_ = new_size;
+       }
+    }
+
+    // clear method to remove all elements
+    void clear(){
+        delete[] data_;
+        data_ = nullptr;
+        size_ = 0;
+        capacity_ = 0;
     }
 
     // ###################################################################
