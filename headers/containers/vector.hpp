@@ -29,6 +29,22 @@ class vector {
         capacity_ = new_capacity;
     }
 
+    void growCapacity(size_t new_capacity) {
+        if(new_capacity <= capacity_) return;
+        
+        T* new_data = new T[new_capacity];
+        for (size_t i = 0; i < size_; i++) {
+            new_data[i] = std::move(data_[i]);
+        }
+
+        if (data_) {
+            delete[] data_;
+        }
+
+        data_ = new_data;
+        capacity_ = new_capacity;
+    }
+
    public:
     // ###################################################################
     // Constructors
@@ -137,6 +153,10 @@ class vector {
 
     // empty method to check if the vector is empty
     bool empty() const { return size_ == 0; }
+
+    void reserve(size_t new_capacity) {
+        growCapacity(new_capacity);
+    }
 
     // ###################################################################
     // element-access methods
