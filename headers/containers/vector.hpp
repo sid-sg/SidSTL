@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <initializer_list>
 #include <iostream>
 #include <stdexcept>
 
@@ -45,7 +46,16 @@ class vector {
             data_[i] = init_value;
         }
     }
-    
+
+    // Constructor with initializer list
+    vector(std::initializer_list<T> init_list) : size_(init_list.size()), capacity_(init_list.size()) {
+        data_ = new T[capacity_];
+        size_t i = 0;
+        for (const auto& item : init_list) {
+            data_[i++] = item;
+        }
+    }
+
     // ###################################################################
     // Rule of 5: destructor, copy constructor, copy assignment operator, move constructor, move assignment operator
 
@@ -85,7 +95,7 @@ class vector {
 
     // Move assignment
     vector& operator=(vector&& rhs) noexcept {
-        if(this != &rhs) {
+        if (this != &rhs) {
             delete[] data_;
 
             size_ = rhs.size_;
