@@ -86,19 +86,9 @@ class vector {
         }
     }
 
-    // Copy assignment operator
-    vector& operator=(const vector& rhs) {
-        if (this != &rhs) {
-            delete[] data_;
-
-            size_ = rhs.size_;
-            capacity_ = rhs.capacity_;
-            data_ = new T[capacity_];
-
-            for (size_t i = 0; i < size_; i++) {
-                data_[i] = rhs.data_[i];
-            }
-        }
+    // Copy assignment operator using copy-and-swap idiom
+    vector& operator=(vector rhs) {
+        swap(rhs);
         return *this;
     }
 
@@ -154,11 +144,18 @@ class vector {
     // empty method to check if the vector is empty
     bool empty() const { return size_ == 0; }
 
+    void swap(vector& other) {
+        std::swap(data_, other.data_);
+        std::swap(size_, other.size_);
+        std::swap(capacity_, other.capacity_);
+    }
+
     // reserve method to change the capacity
     void reserve(size_t new_capacity) {
         growCapacity(new_capacity);
     }
 
+    // resize method to change the size of the vector
     void resize(size_t new_size){
        if(new_size < size_) {
             size_ = new_size;
@@ -176,6 +173,7 @@ class vector {
        }            
     }
 
+    // resize method to change the size of the vector with a value
     void resize(size_t new_size, const T& value) {
        if(new_size < size_) {
             size_ = new_size;

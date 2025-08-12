@@ -1,5 +1,5 @@
 # Vector todos:
-- swap
+- shrink-to-fit
 - insert
 - iterators
 - emplace_back

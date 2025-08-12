@@ -38,4 +38,8 @@ int main() {
     std::cout << "Vector 3: " << vec3 << std::endl;
     std::cout << "Size of Vector 3 after resize: " << vec3.size()<< std::endl;
     std::cout << "Capacity of Vector 3 after resize: " << vec3.capacity() << std::endl;
+
+    vec3.swap(vec2);
+    std::cout << "Vector 3 after swap: " << vec3 << std::endl;
+    std::cout << "Vector 2 after swap: " << vec2 << std::endl;
 }
