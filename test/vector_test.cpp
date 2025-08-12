@@ -42,4 +42,9 @@ int main() {
     vec3.swap(vec2);
     std::cout << "Vector 3 after swap: " << vec3 << std::endl;
     std::cout << "Vector 2 after swap: " << vec2 << std::endl;
+
+    std::cout<<(vec2==vec3)<<std::endl;
+    vec2=vec3;
+    std::cout<<(vec2==vec3)<<std::endl;
+
 }

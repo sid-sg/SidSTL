@@ -132,6 +132,19 @@ class vector {
         return os;
     }
 
+    // == operator to compare two vectors
+    bool operator==(const vector& rhs) const{
+        if (size_ != rhs.size_) {
+            return false;
+        }
+        for (size_t i = 0; i < size_; i++) {
+            if (data_[i] != rhs.data_[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // ###################################################################
     // Capacity methods
 
@@ -144,6 +157,7 @@ class vector {
     // empty method to check if the vector is empty
     bool empty() const { return size_ == 0; }
 
+    // swap method to swap two vectors
     void swap(vector& other) {
         std::swap(data_, other.data_);
         std::swap(size_, other.size_);
