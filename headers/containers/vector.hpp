@@ -262,5 +262,28 @@ class vector {
             size_--;
         }
     }
+    
+    // ###################################################################
+    // iterators
+
+    using iterator = T*;
+    using const_iterator = const T*;
+
+    iterator begin() {
+        return data_;
+    }
+
+    iterator end() {
+        return data_ + size_;
+    }
+
+    const_iterator begin() const {
+        return data_;
+    }
+
+    const_iterator end() const {
+        return data_ + size_;
+    }
+
 };
 };  // namespace sid

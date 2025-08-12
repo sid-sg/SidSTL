@@ -43,8 +43,13 @@ int main() {
     std::cout << "Vector 3 after swap: " << vec3 << std::endl;
     std::cout << "Vector 2 after swap: " << vec2 << std::endl;
 
-    std::cout<<(vec2==vec3)<<std::endl;
-    vec2=vec3;
-    std::cout<<(vec2==vec3)<<std::endl;
+    std::cout << "vector 2: " << std::endl;
+    for(auto&e:vec2){
+        std::cout << e << " ";
+    }
+    std::cout << std::endl;
+
+    auto it = vec2.begin();
+    std::cout << "First element using iterator: " << *it << std::endl;
 
 }
