@@ -165,7 +165,7 @@ class vector {
         std::swap(capacity_, other.capacity_);
     }
 
-    friend void swap(vector& lhs, vector& rhs) {
+    friend void swap(vector& lhs, vector& rhs) noexcept {
         std::swap(lhs.data_, rhs.data_);
         std::swap(lhs.size_, rhs.size_);
         std::swap(lhs.capacity_, rhs.capacity_);
@@ -248,6 +248,20 @@ class vector {
     }
 
     // ###################################################################
+    // iterators
+
+    using iterator = T*;
+    using const_iterator = const T*;
+
+    iterator begin() { return data_; }
+
+    iterator end() { return data_ + size_; }
+
+    const_iterator begin() const { return data_; }
+
+    const_iterator end() const { return data_ + size_; }
+
+    // ###################################################################
     // modifier methods
 
     // push_back method to add an element
@@ -266,26 +280,48 @@ class vector {
         }
     }
 
-    // iterator insert(const_iterator pos, const T& value) {
-    //     if (size_ >= capacity_) {
+    // insert method to add an element at a specific position
+    iterator insert(const_iterator pos, const T& value) {
+        size_t pos_index = pos - begin();
+        if (pos_index > size_) {
+            throw std::out_of_range("Position out of range");
+        }
+
+        if (size_ + 1 >= capacity_) {
+            reallocate();
+        }
+
+        for (size_t i = size_; i > pos_index; --i) {
+            data_[i] = std::move(data_[i - 1]);
+        }
+
+        data_[pos_index] = value;
+        size_++;
+
+        return data_ + pos_index;
+    }
+
+    // iterator insert(const_iterator pos, size_t count, const T& value) {
+    //     size_t pos_index = pos - begin();
+    //     if (pos_index > size_) {
+    //         throw std::out_of_range("Position out of range");
+    //     }
+
+    //     if (size_ + count >= capacity_) {
     //         reallocate();
     //     }
 
+    //     for (size_t i = size_ + count - 1; i > pos_index; --i) {
+    //         data_[i] = std::move(data_[i - 1]);
+    //     }
 
+    //     for (size_t i = pos_index; i < pos_index + count; ++i) {
+    //         data_[i] = value;
+    //     }
+
+    //     size_ += count;
+
+    //     return data_;
     // }
-
-    // ###################################################################
-    // iterators
-
-    using iterator = T*;
-    using const_iterator = const T*;
-
-    iterator begin() { return data_; }
-
-    iterator end() { return data_ + size_; }
-
-    const_iterator begin() const { return data_; }
-
-    const_iterator end() const { return data_ + size_; }
 };
 };  // namespace sid

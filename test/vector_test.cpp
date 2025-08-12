@@ -1,13 +1,11 @@
 #include "../headers/containers/vector.hpp"
 
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <ranges>
 
 int main() {
-    sid::vector<int> vec = {1, 2, 3, 4, 5};
-    sid::vector<int> vec2(5, 10);
-    swap(vec, vec2);
-    std::cout << "vec: " << vec << "\n";
-    std::cout << "vec2: " << vec2 << "\n";
+    sid::vector<int> vec = {6, 7, 4, 3, 4, 6, 2, 8};
+    vec.insert(vec.begin() + 3, 100);
+    std::cout << vec << std::endl;
 }
