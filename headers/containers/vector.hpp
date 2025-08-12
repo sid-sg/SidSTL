@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <initializer_list>
 #include <iostream>
@@ -30,8 +31,8 @@ class vector {
     }
 
     void growCapacity(size_t new_capacity) {
-        if(new_capacity <= capacity_) return;
-        
+        if (new_capacity <= capacity_) return;
+
         T* new_data = new T[new_capacity];
         for (size_t i = 0; i < size_; i++) {
             new_data[i] = std::move(data_[i]);
@@ -133,7 +134,7 @@ class vector {
     }
 
     // == operator to compare two vectors
-    bool operator==(const vector& rhs) const{
+    bool operator==(const vector& rhs) const {
         if (size_ != rhs.size_) {
             return false;
         }
@@ -164,49 +165,51 @@ class vector {
         std::swap(capacity_, other.capacity_);
     }
 
-    // reserve method to change the capacity
-    void reserve(size_t new_capacity) {
-        growCapacity(new_capacity);
+    friend void swap(vector& lhs, vector& rhs) {
+        std::swap(lhs.data_, rhs.data_);
+        std::swap(lhs.size_, rhs.size_);
+        std::swap(lhs.capacity_, rhs.capacity_);
     }
 
+    // reserve method to change the capacity
+    void reserve(size_t new_capacity) { growCapacity(new_capacity); }
+
     // resize method to change the size of the vector
-    void resize(size_t new_size){
-       if(new_size < size_) {
+    void resize(size_t new_size) {
+        if (new_size < size_) {
             size_ = new_size;
-       }
-       else if(new_size > size_) {
-            if(new_size > capacity_){
-                growCapacity(new_size);               
+        } else if (new_size > size_) {
+            if (new_size > capacity_) {
+                growCapacity(new_size);
             }
 
-            for(size_t i = size_; i < new_size; ++i) {
+            for (size_t i = size_; i < new_size; ++i) {
                 data_[i] = T();
             }
 
             size_ = new_size;
-       }            
+        }
     }
 
     // resize method to change the size of the vector with a value
     void resize(size_t new_size, const T& value) {
-       if(new_size < size_) {
+        if (new_size < size_) {
             size_ = new_size;
-       }
-       else if(new_size > size_) {
-            if(new_size > capacity_){
-                growCapacity(new_size);               
+        } else if (new_size > size_) {
+            if (new_size > capacity_) {
+                growCapacity(new_size);
             }
 
-            for(size_t i = size_; i < new_size; ++i) {
+            for (size_t i = size_; i < new_size; ++i) {
                 data_[i] = value;
             }
 
             size_ = new_size;
-       }
+        }
     }
 
     // clear method to remove all elements
-    void clear(){
+    void clear() {
         delete[] data_;
         data_ = nullptr;
         size_ = 0;
@@ -262,28 +265,27 @@ class vector {
             size_--;
         }
     }
-    
+
+    // iterator insert(const_iterator pos, const T& value) {
+    //     if (size_ >= capacity_) {
+    //         reallocate();
+    //     }
+
+
+    // }
+
     // ###################################################################
     // iterators
 
     using iterator = T*;
     using const_iterator = const T*;
 
-    iterator begin() {
-        return data_;
-    }
+    iterator begin() { return data_; }
 
-    iterator end() {
-        return data_ + size_;
-    }
+    iterator end() { return data_ + size_; }
 
-    const_iterator begin() const {
-        return data_;
-    }
+    const_iterator begin() const { return data_; }
 
-    const_iterator end() const {
-        return data_ + size_;
-    }
-
+    const_iterator end() const { return data_ + size_; }
 };
 };  // namespace sid
